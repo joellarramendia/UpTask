@@ -2,8 +2,9 @@ import { Link } from "react-router-dom"
 import {useForm} from 'react-hook-form'
 import ProjectForm from "@/components/projects/ProjectForm"
 import { ProjectFormData } from "@/types/index"
+import { createProject } from "@/api/ProjectAPI"
 
-const CreateProjectView = () => {
+export default function CreateProjectView () {
 
     const initialValues: ProjectFormData = {
         projectName: "",
@@ -12,8 +13,8 @@ const CreateProjectView = () => {
     }
     const {register, handleSubmit, formState: {errors}} = useForm({defaultValues: initialValues})
 
-    const handleForm = (data: ProjectFormData) => {
-        console.log(data)
+    const handleForm = (formData: ProjectFormData) => {
+        createProject(formData)
     }
 
   return (
@@ -47,4 +48,4 @@ const CreateProjectView = () => {
   )
 }
 
-export default CreateProjectView
+
