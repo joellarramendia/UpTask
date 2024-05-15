@@ -1,46 +1,35 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
-/*
-const taskStatus = {
-    PENDING: 'pending',
-    ON_HOLD: 'onHold',
-    IN_PROGRESS: 'inProgress',
-    UNDER_REVIEW: 'underReview',
-    COMPLETED: 'completed'
-} as const  // This is a TypeScript feature called const assertion
 
-export type TaskStatus = typeof taskStatus[keyof typeof taskStatus]// This is a TypeScript feature called indexed access types
-*/
 
-// cambio de Itask a User
 export interface IUser extends Document {
-    name: string
     email: string
     password: string
-    confirmedPassword: string
+    name: string
+    confirmed: boolean
 
 }
-export const UserSchema: Schema = new Schema({
-    name: {
-        type: String,
-        required: true,
-        trim: true
-    },
+const UserSchema: Schema = new Schema({
     email: {
         type: String,
         required: true,
-        trim: true
+        lowercase: true,
+        unique: true,
     },
     password: {
         type: String,
         required: true
     },
-    confirmedPassword: {
+    name: {
         type: String,
         required: true
+    },
+    confirmed: {
+        type: Boolean,
+        default: false
 
 
     }
-}, { timestamps: true });
+});
 
 const User = mongoose.model<IUser>('User', UserSchema);
 export default User;

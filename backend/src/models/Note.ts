@@ -1,39 +1,26 @@
 import mongoose, { Schema, Document, Types } from "mongoose";
-import Task from "./Task";
-import User from "./User";
 
-/*
-const taskStatus = {
-    PENDING: 'pending',
-    ON_HOLD: 'onHold',
-    IN_PROGRESS: 'inProgress',
-    UNDER_REVIEW: 'underReview',
-    COMPLETED: 'completed'
-} as const  // This is a TypeScript feature called const assertion
 
-export type TaskStatus = typeof taskStatus[keyof typeof taskStatus]// This is a TypeScript feature called indexed access types
-*/
-// Note debe estar relacionado con User y Task
 export interface INote extends Document {
     content: string
-    createBy: string
-    //project: Types.ObjectId  // This is a reference to the Project model
-    task: string
+    createBy: Types.ObjectId
+    task: Types.ObjectId
 }
 
-export const NoteSchema: Schema = new Schema({
+const NoteSchema: Schema = new Schema({
     content: {
         type: String,
         required: true,
     },
     createBy: {
-        type: String,
-        required: true,
-        ref: 'User'
+        type: Types.ObjectId,
+        ref: 'User',
+        required: true
     },
     task: {
         type: Types.ObjectId,
-        ref: 'Task'
+        ref: 'Task',
+        required: true
     },
 }, { timestamps: true });
 
