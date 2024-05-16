@@ -3,6 +3,7 @@ import { useQuery } from '@tanstack/react-query'
 import { getProjectById } from '@/api/ProjectAPI'
 import AddTaskModal from '@/components/tasks/AddTaskModal'
 import TaskList from '@/components/tasks/TaskList'
+import EditTaskData from '@/components/tasks/EditTaskData'
 //import EditProjectForm from '@/components/projects/EditProjectForm'
 
 const ProjectDetailsView = () => {
@@ -13,7 +14,7 @@ const ProjectDetailsView = () => {
     const projectId = params.projectId! /* ! is used to tell typescript that this value will never be null*/
 
     const {data, isLoading, isError} = useQuery({
-        queryKey: ['editProject', projectId],
+        queryKey: ['project', projectId],
         queryFn: () => getProjectById(projectId),
         retry: false
 
@@ -37,6 +38,7 @@ const ProjectDetailsView = () => {
 
             <TaskList tasks={data.tasks} />
             <AddTaskModal />
+            <EditTaskData/>
         </>
       )
 
