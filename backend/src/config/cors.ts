@@ -7,6 +7,10 @@ export const corsConfig: CorsOptions = {
     // Registro en la consola utilizando la función global 'console'
     console.log('Origen recibido:', origin);
 
+    if(process.argv[2] === '--api'){
+      whitelist.push(undefined)
+    }
+
     if (whitelist.includes(origin)) {
       console.log('Origen permitido:', origin);
       callback(null, true);
