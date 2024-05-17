@@ -1,4 +1,4 @@
-/*import { useQuery} from '@tanstack/react-query'
+import { useQuery} from '@tanstack/react-query'
 import { getUser } from "@/api/AuthAPI";
 
 export const useAuth = () => {
@@ -10,4 +10,4 @@ export const useAuth = () => {
     })
 
     return { data, isError, isLoading }
-}*/
+}

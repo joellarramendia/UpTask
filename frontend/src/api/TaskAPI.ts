@@ -11,9 +11,14 @@ type TaskAPI = {
 }
 
 export async function createTask({formData, projectId} : Pick<TaskAPI, 'formData' | 'projectId'>) {
+    const token = localStorage.getItem('AUTH_TOKEN')
     try {
         const url = `http://localhost:4000/api/projects/${projectId}/tasks`
-        const {data} = await axios.post<string>(url, formData)
+        const {data} = await axios.post<string>(url, formData, {
+            headers: {
+               Authorization: `Bearer ${token}`
+            }
+         })
         return data
     } catch (error) {
         if(isAxiosError(error) && error.response) {
@@ -24,9 +29,14 @@ export async function createTask({formData, projectId} : Pick<TaskAPI, 'formData
 
 
 export async function getTaskById({projectId, taskId}: Pick<TaskAPI, 'projectId' | 'taskId'>) {
+    const token = localStorage.getItem('AUTH_TOKEN')
     try {
         const url = `http://localhost:4000/api/projects/${projectId}/tasks/${taskId}`
-        const { data } = await axios.get(url)
+        const { data } = await axios.get(url, {
+            headers: {
+               Authorization: `Bearer ${token}`
+            }
+         })
         const response = taskSchema.safeParse(data)
         if(response.success) {
             return response.data
@@ -40,9 +50,14 @@ export async function getTaskById({projectId, taskId}: Pick<TaskAPI, 'projectId'
 
 
 export async function updateTask({projectId, taskId, formData}: Pick<TaskAPI, 'projectId' | 'taskId' | 'formData'>) {
+    const token = localStorage.getItem('AUTH_TOKEN')
     try {
         const url = `http://localhost:4000/api/projects/${projectId}/tasks/${taskId}`
-        const { data } = await axios.put<string>(url, formData)
+        const { data } = await axios.put<string>(url, formData, {
+            headers: {
+               Authorization: `Bearer ${token}`
+            }
+         })
         console.log(data)
         return data
     } catch (error) {
@@ -55,9 +70,14 @@ export async function updateTask({projectId, taskId, formData}: Pick<TaskAPI, 'p
 
 
 export async function deleteTask({projectId, taskId} : Pick<TaskAPI, 'projectId' | 'taskId'>) {
+    const token = localStorage.getItem('AUTH_TOKEN')
     try {
         const url = `http://localhost:4000/api/projects/${projectId}/tasks/${taskId}`
-        const { data } = await axios.delete<string>(url)
+        const { data } = await axios.delete<string>(url, {
+            headers: {
+               Authorization: `Bearer ${token}`
+            }
+         })
         return data
     } catch (error) {
         if(isAxiosError(error) && error.response) {
@@ -68,9 +88,14 @@ export async function deleteTask({projectId, taskId} : Pick<TaskAPI, 'projectId'
 
 
 export async function updateStatus({projectId, taskId, status} : Pick<TaskAPI, 'projectId' | 'taskId' | 'status'>) {
+    const token = localStorage.getItem('AUTH_TOKEN')
     try {
         const url = `http://localhost:4000/api/projects/${projectId}/tasks/${taskId}/status`
-        const { data } = await axios.post<string>(url, {status})
+        const { data } = await axios.post<string>(url, {status}, {
+            headers: {
+               Authorization: `Bearer ${token}`
+            }
+         })
         return data
     } catch (error) {
         if(isAxiosError(error) && error.response) {

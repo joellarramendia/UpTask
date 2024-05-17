@@ -4,8 +4,13 @@ import axios, { isAxiosError } from "axios";
 
 
 export async function createProject(formData: ProjectFormData) {
+   const token = localStorage.getItem('AUTH_TOKEN')
    try {
-      const {data} = await axios.post('http://localhost:4000/api/projects', formData)
+      const {data} = await axios.post('http://localhost:4000/api/projects', formData, {
+         headers: {
+            Authorization: `Bearer ${token}`
+         }
+      })
       return data
    } catch (error) {
       if(isAxiosError(error) && error.response) {
@@ -16,8 +21,15 @@ export async function createProject(formData: ProjectFormData) {
 
 
 export async function getProjects() {
+   const token = localStorage.getItem('AUTH_TOKEN')
+   console.log(token)
    try {
-      const {data} = await axios.get('http://localhost:4000/api/projects')
+      const {data} = await axios.get('http://localhost:4000/api/projects', {
+         headers: {
+            Authorization: `Bearer ${token}`
+         }
+      
+      })
       const response = dashboardProjectSchema.safeParse(data)
       if(response.success) {
          return response.data
@@ -32,8 +44,13 @@ export async function getProjects() {
 
 
 export async function getProjectById(id: Project['_id']) {
+    const token = localStorage.getItem('AUTH_TOKEN')
    try {
-      const {data} = await axios.get(`http://localhost:4000/api/projects/${id}`)
+      const {data} = await axios.get(`http://localhost:4000/api/projects/${id}`, {
+        headers: {
+           Authorization: `Bearer ${token}`
+        }
+     })
       return data
    } catch (error) {
       if(isAxiosError(error) && error.response) {
@@ -50,8 +67,13 @@ type ProjectAPIType = {
 }
 
 export async function updateProject({formData, projectId}: ProjectAPIType ) {
+    const token = localStorage.getItem('AUTH_TOKEN')
    try {
-      const {data} = await axios.put<String>(`http://localhost:4000/api/projects/${projectId}`, formData)
+      const {data} = await axios.put<String>(`http://localhost:4000/api/projects/${projectId}`, formData,{
+        headers: {
+           Authorization: `Bearer ${token}`
+        }
+     })
       return data
    } catch (error) {
       if(isAxiosError(error) && error.response) {
@@ -63,8 +85,13 @@ export async function updateProject({formData, projectId}: ProjectAPIType ) {
 
 
 export async function deleteProject(id: Project['_id']) {
+    const token = localStorage.getItem('AUTH_TOKEN')
    try {
-      const {data} = await axios.delete<string>(`http://localhost:4000/api/projects/${id}`)
+      const {data} = await axios.delete<string>(`http://localhost:4000/api/projects/${id}`, {
+        headers: {
+           Authorization: `Bearer ${token}`
+        }
+     })
       return data
    } catch (error) {
       if(isAxiosError(error) && error.response) {
@@ -73,3 +100,4 @@ export async function deleteProject(id: Project['_id']) {
    } 
     
 }
+
