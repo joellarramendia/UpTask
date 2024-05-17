@@ -5,8 +5,11 @@ import { handleInputErrors } from '../middleware/validation';
 import { TaskController } from '../controllers/TaskController';
 import { ProjectExists } from '../middleware/project';
 import { taskBelongsToProject, taskExists } from '../middleware/task';
+import { authenticate } from '../middleware/auth';
 
 const router = Router();
+
+router.use(authenticate);
 
 router.post('/', 
     body('projectName')
