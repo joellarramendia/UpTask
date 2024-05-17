@@ -40,7 +40,7 @@ router.post('/login',
     AuthController.login
 )
 
-/*
+
 router.post('/request-code',
     body('email')
         .isEmail().withMessage('E-mail no válido'),
@@ -76,7 +76,7 @@ router.post('/update-password/:token',
     handleInputErrors,
     AuthController.updatePasswordWithToken
 )
-
+/*
 router.get('/user',
     authenticate,
     AuthController.user
